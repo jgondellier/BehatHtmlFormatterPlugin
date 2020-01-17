@@ -3,11 +3,11 @@
     "description": "This will create a html formatter for Behat.",
     "authors": [
         {
-            "name": "Neal Vanmeert"
+            "name": "Neal Vanmeert et un tout petit peu moi"
         }
     ],
     "require": {
-        "php": ">=7.3.0",
+        "php": ">=7.1.0",
         "twig/twig":"~2.0",
         "behat/behat": "~3.0",
         "behat/gherkin": "~4.2"
