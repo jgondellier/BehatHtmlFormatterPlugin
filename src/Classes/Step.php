@@ -1,6 +1,6 @@
 <?php
 
-namespace emuse\BehatHTMLFormatter\Classes;
+namespace gondellier\BehatHTMLFormatter\Classes;
 
 use Behat\Behat\Tester\Result\StepResult;
 

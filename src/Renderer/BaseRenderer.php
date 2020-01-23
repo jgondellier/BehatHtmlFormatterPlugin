@@ -5,7 +5,7 @@
  * @author DaSayan <glennwall@free.fr>
  */
 
-namespace emuse\BehatHTMLFormatter\Renderer;
+namespace gondellier\BehatHTMLFormatter\Renderer;
 
 class BaseRenderer
 {
