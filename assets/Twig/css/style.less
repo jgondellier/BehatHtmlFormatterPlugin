@@ -82,7 +82,8 @@ body {
     background-color: #ffffff;
 
     .progress {
-      margin-bottom: 0px;
+      margin-bottom: 0;
+      padding-top: 5px;
     }
   }
 
@@ -122,21 +123,21 @@ body {
     .details {
       .panel {
         &.passed {
-          > .panel-heading {
+          a > .panel-heading {
             color: white;
             background-color: @color-passed;
             background-image: none;
           }
         }
         &.pending {
-          > .panel-heading {
+          a > .panel-heading {
             color: white;
             background-color: @color-pending;
             background-image: none;
           }
         }
         &.failed {
-          > .panel-heading {
+          a > .panel-heading {
             color: white;
             background-color: @color-failed;
             background-image: none;
