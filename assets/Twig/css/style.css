@@ -1,4 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700);
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url(https://fonts.gstatic.com/s/sourcesanspro/v13/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v13/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7g.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v13/6xKydSBYKcSV-LCoeQqfX1RYOo3ig4vwlxdr.ttf) format('truetype');
+}
 .bs-callout {
   padding: 20px;
   margin: 20px 0;
@@ -76,7 +93,7 @@ body {
   background-color: #00a65a;
 }
 .card.failed .header {
-  background-color: #f56956;
+  background-color: #F56956;
 }
 .card .header {
   color: #fff;
@@ -122,7 +139,8 @@ body {
   background-color: #ffffff;
 }
 .card .footer .progress {
-  margin-bottom: 0px;
+  margin-bottom: 0;
+  margin-top: 5px;
 }
 .progress {
   height: 20px;
@@ -161,10 +179,7 @@ body {
 }
 #scenario-overview .feature .details .panel.failed > .panel-heading {
   color: white;
-  background-color: #f56956;
+  background-color: #F56956;
   background-image: none;
 }
-.list-group-item.break {
-  padding: 1px;
-  background-color: #808080;
-}
+/*# sourceMappingURL=style.css.map */
