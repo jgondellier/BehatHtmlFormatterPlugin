@@ -140,7 +140,7 @@ body {
 }
 .card .footer .progress {
   margin-bottom: 0;
-  padding-top: 5px;
+  margin-top: 5px;
 }
 .progress {
   height: 20px;
@@ -167,17 +167,17 @@ body {
 #scenario-overview .feature.selected {
   display: block;
 }
-#scenario-overview .feature .details .panel.passed a > .panel-heading {
+#scenario-overview .feature .details .panel.passed > .panel-heading {
   color: white;
   background-color: #00a65a;
   background-image: none;
 }
-#scenario-overview .feature .details .panel.pending a > .panel-heading {
+#scenario-overview .feature .details .panel.pending > .panel-heading {
   color: white;
   background-color: #e38d13;
   background-image: none;
 }
-#scenario-overview .feature .details .panel.failed a > .panel-heading {
+#scenario-overview .feature .details .panel.failed > .panel-heading {
   color: white;
   background-color: #F56956;
   background-image: none;
