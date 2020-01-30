@@ -94,50 +94,52 @@
     <hr>
     <div id="feature-overview">
         {% for suite in suites %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2>Suite: {{ suite.name }}</h2>
+            {% if suite.features[0] is defined %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Suite: {{ suite.name }}</h2>
 
-                    <div class="row">
-                        {% for feature in suite.features %}
-                            <div class="col-sm-4 feature" data-id="feature-{{ feature.id }}">
-                                <div class="card {{ feature.getPassedClass }}">
-                                    <div class="header">
-                                        <h2>Feature: {{ feature.name }}</h2>
-                                    </div>
-                                    <div class="info">
-                                        <p>{{ feature.description|raw|nl2br }}</p>
-                                    </div>
-                                    <div class="footer">
-                                        <div class="tags">
-                                            {% for tag in feature.tags %}
-                                                <span class="badge">{{ tag }}</span>
-                                            {% endfor %}
+                        <div class="row">
+                            {% for feature in suite.features %}
+                                <div class="col-sm-4 feature" data-id="feature-{{ feature.id }}">
+                                    <div class="card {{ feature.getPassedClass }}">
+                                        <div class="header">
+                                            <h2>Feature: {{ feature.name }}</h2>
                                         </div>
-                                        {% if feature.getTotalAmountOfScenarios > 0 %}
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-green" role="progressbar"
-                                                     style="width: {{ feature.getPercentPassed }}%">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
-                                                <div class="progress-bar progress-bar-warning" role="progressbar"
-                                                     style="width: {{ feature.getPercentPending }}%">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
-                                                <div class="progress-bar progress-bar-red" role="progressbar"
-                                                     style="width: {{ feature.getPercentFailed }}%">
-                                                    <span class="sr-only">40% Complete (success)</span>
-                                                </div>
+                                        <div class="info">
+                                            <p>{{ feature.description|raw|nl2br }}</p>
+                                        </div>
+                                        <div class="footer">
+                                            <div class="tags">
+                                                {% for tag in feature.tags %}
+                                                    <span class="badge">{{ tag }}</span>
+                                                {% endfor %}
                                             </div>
-                                        {% endif %}
+                                            <div class="progress">
+                                                {% if feature.getTotalAmountOfScenarios > 0 %}
+                                                    <div class="progress-bar progress-bar-green" role="progressbar"
+                                                         style="width: {{ feature.getPercentPassed }}%">
+                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-warning" role="progressbar"
+                                                         style="width: {{ feature.getPercentPending }}%">
+                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-red" role="progressbar"
+                                                         style="width: {{ feature.getPercentFailed }}%">
+                                                        <span class="sr-only">40% Complete (success)</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
+                <hr>
+            {% endif %}
         {% endfor %}
     </div>
     <div id="scenario-overview" class="row">
@@ -194,7 +196,7 @@
                                                 <span class="badge">{{ tag }}</span>
                                             {% endfor %}
                                             {% if scenario.getRelativeScreenshotPath() %}
-                                            <a class="label label-default" href="{{ scenario.getRelativeScreenshotPath() }}" target="_blank">Screenshot</a>
+                                                <a class="label label-default" href="{{ scenario.getRelativeScreenshotPath() }}" target="_blank">Screenshot</a>
                                             {% endif %}
                                         </div>
                                     </h4>
@@ -204,26 +206,26 @@
                                      aria-labelledby="headingOne">
                                     <ul class="list-group">
                                         {% for step in scenario.steps %}
-                                            <li class="list-group-item alert alert-{% if step.isPassed %}success{% elseif step.isSkipped %}info{% elseif step.isPending %}warning{% else %}danger{% endif %}">
-                                                <b>{{ step.keyword }}</b> {{ step.text }}
-                                                {% if printStepArgs is not null %}
-                                                    {% for argument in step.arguments %}
-                                                        <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">
-                                                            |{% for subarg in argument %} {{ subarg | nl2br}} | {% endfor %}
-                                                        </p>
-                                                    {% endfor %}
-                                                {% endif %}
-                                                {% if step.exception is not null %}
-                                                    <br>
-                                                    <p style="padding-left:2em ; color:gray">({{ step.exception }})</p>
-                                                {% endif %}
-                                                {% if step.output is not null %}
-                                                    <br>
-                                                    <p style="padding-left:2em ; color:black">| {{ step.output }}</p>
-                                                {% endif %}
-                                                {% if printLoopBreak is not null and ( loop.index % scenario.getLoopSize ) == 0 and loop.last != true  %}
-                                                    </li><li class="list-group-item break">
-                                                {% endif %}
+                                        <li class="list-group-item alert alert-{% if step.isPassed %}success{% elseif step.isSkipped %}info{% elseif step.isPending %}warning{% else %}danger{% endif %}">
+                                            <b>{{ step.keyword }}</b> {{ step.text }}
+                                            {% if printStepArgs is not null %}
+                                                {% for argument in step.arguments %}
+                                                    <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">
+                                                        |{% for subarg in argument %} {{ subarg | nl2br}} | {% endfor %}
+                                                    </p>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if step.exception is not null %}
+                                                <br>
+                                                <p style="padding-left:2em ; color:gray">({{ step.exception }})</p>
+                                            {% endif %}
+                                            {% if step.output is not null %}
+                                                <br>
+                                                <p style="padding-left:2em ; color:black">| {{ step.output }}</p>
+                                            {% endif %}
+                                            {% if printLoopBreak is not null and ( loop.index % scenario.getLoopSize ) == 0 and loop.last != true  %}
+                                                </li><li class="list-group-item break">
+                                            {% endif %}
                                             </li>
                                             {#<div class="bs-callout bs-callout-{% if step.passed %}success{% else %}danger{% endif %}" id="callout-collapse-accessibility">#}
                                             {#<b>{{ step.keyword }}</b> {{ step.text }}#}
