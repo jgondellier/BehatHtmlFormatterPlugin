@@ -7,6 +7,7 @@ use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use gondellier\BehatHTMLFormatter\Formatter\BehatHTMLFormatter;
 
 /**
  * Class BehatHTMLFormatterExtension.
@@ -71,7 +72,7 @@ class BehatHTMLFormatterExtension implements ExtensionInterface
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $definition = new Definition('gondellier\\BehatHTMLFormatter\\Formatter\\BehatHTMLFormatter');
+        $definition = new Definition(BehatHTMLFormatter::class);
         $definition->addArgument($config['name']);
         $definition->addArgument($config['renderer']);
         $definition->addArgument($config['file_name']);

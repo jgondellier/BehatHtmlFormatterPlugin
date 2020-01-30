@@ -2,17 +2,41 @@
 
 namespace gondellier\BehatHTMLFormatter\Classes;
 
+/**
+ * Class Scenario
+ * @package gondellier\BehatHTMLFormatter\Classes
+ */
 class Scenario
 {
     /**
      * @var int
      */
     private $id;
+    /**
+     * @var
+     */
     private $name;
+    /**
+     * @var
+     */
     private $line;
+    /**
+     * @var
+     */
     private $tags;
+    /**
+     * @var
+     */
     private $loopCount;
+
+    /**
+     * @var string
+     */
     private $screenshotName;
+    /**
+     * @var
+     */
+    private $url;
 
     /**
      * @var bool
@@ -28,6 +52,9 @@ class Scenario
      * @var Step[]
      */
     private $steps;
+    /**
+     * @var
+     */
     private $screenshotPath;
 
     /**
@@ -46,20 +73,42 @@ class Scenario
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getScreenshotName()
     {
         return $this->screenshotName;
     }
 
+    /**
+     * @param $scenarioName
+     */
     public function setScreenshotName($scenarioName)
     {
         $this->screenshotName = preg_replace('/\W/', '', $scenarioName).'.png';
     }
 
     /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param $url
+     */
+    public function setUrl($url): void
+    {
+        $this->url = $url;
+    }
+
+    /**
      * @return int
      */
-    public function getLoopCount()
+    public function getLoopCount(): int
     {
         return $this->loopCount;
     }
@@ -67,7 +116,7 @@ class Scenario
     /**
      * @param int $loopCount
      */
-    public function setLoopCount($loopCount)
+    public function setLoopCount($loopCount): void
     {
         $this->loopCount = $loopCount;
     }
@@ -83,7 +132,7 @@ class Scenario
     /**
      * @param mixed $line
      */
-    public function setLine($line)
+    public function setLine($line): void
     {
         $this->line = $line;
     }
@@ -176,12 +225,18 @@ class Scenario
         $this->id = $id;
     }
 
+    /**
+     * @return float|int
+     */
     public function getLoopSize()
     {
         //behat
         return $this->loopCount > 0 ? sizeof($this->steps) / $this->loopCount : sizeof($this->steps);
     }
 
+    /**
+     * @param $string
+     */
     public function setScreenshotPath($string)
     {
         $this->screenshotPath = $string;

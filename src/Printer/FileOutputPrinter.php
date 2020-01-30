@@ -37,7 +37,7 @@ class FileOutputPrinter implements PrinterInterface
         //let's generate the filenames for the renderers
         $this->rendererFiles = array();
         foreach ($rendererList as $renderer) {
-            if ('generated' == $filename) {
+            if ('generated' === $filename) {
                 $date = date('YmdHis');
                 $this->rendererFiles[$renderer] = $renderer.'_'.$date;
             } else {
@@ -54,29 +54,27 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @param string $path Output path relative to %paths.base%
      */
-    public function setOutputPath($path)
+    public function setOutputPath($path):void
     {
         $outpath = $path;
         if (!file_exists($outpath)) {
-            if (!mkdir($outpath, 0755, true)) {
+            if (!mkdir($outpath, 0755, true) && !is_dir($outpath)) {
                 throw new BadOutputPathException(
-          sprintf(
-            'Output path %s does not exist and could not be created!',
-            $outpath
-          ),
-          $outpath
-        );
+                    sprintf(
+                        'Output path %s does not exist and could not be created!',
+                        $outpath
+                    ),
+                    $outpath
+                );
             }
-        } else {
-            if (!is_dir(realpath($outpath))) {
-                throw new BadOutputPathException(
-          sprintf(
-            'The argument to `output` is expected to the a directory, but got %s!',
-            $outpath
-          ),
-          $outpath
-        );
-            }
+        } else if (!is_dir(realpath($outpath))) {
+            throw new BadOutputPathException(
+                sprintf(
+                    'The argument to `output` is expected to the a directory, but got %s!',
+                    $outpath
+                ),
+                $outpath
+            );
         }
         $this->outputPath = $outpath;
     }
@@ -86,7 +84,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @return string output path
      */
-    public function getOutputPath()
+    public function getOutputPath():string
     {
         return $this->outputPath;
     }
