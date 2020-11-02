@@ -28,7 +28,7 @@ class Step
     /**
      * @param mixed $keyword
      */
-    public function setKeyword($keyword)
+    public function setKeyword($keyword): void
     {
         $this->keyword = $keyword;
     }
@@ -44,7 +44,7 @@ class Step
     /**
      * @param mixed $text
      */
-    public function setText($text)
+    public function setText($text): void
     {
         $this->text = $text;
     }
@@ -182,7 +182,7 @@ class Step
      */
     public function isPassed()
     {
-        return StepResult::PASSED == $this->resultCode;
+        return StepResult::PASSED === $this->resultCode;
     }
 
     /**
@@ -190,7 +190,7 @@ class Step
      */
     public function isSkipped()
     {
-        return StepResult::SKIPPED == $this->resultCode;
+        return StepResult::SKIPPED === $this->resultCode;
     }
 
     /**
@@ -198,7 +198,7 @@ class Step
      */
     public function isPending()
     {
-        return StepResult::PENDING == $this->resultCode || StepResult::UNDEFINED == $this->resultCode;
+        return StepResult::PENDING === $this->resultCode || StepResult::UNDEFINED === $this->resultCode;
     }
 
     /**
@@ -206,6 +206,6 @@ class Step
      */
     public function isFailed()
     {
-        return StepResult::FAILED == $this->resultCode;
+        return StepResult::FAILED === $this->resultCode;
     }
 }

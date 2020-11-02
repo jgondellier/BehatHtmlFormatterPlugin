@@ -7,6 +7,8 @@
 
 namespace gondellier\BehatHTMLFormatter\Renderer;
 
+use gondellier\BehatHTMLFormatter\Formatter\BehatHTMLFormatter;
+
 class BaseRenderer
 {
     /**
@@ -25,9 +27,9 @@ class BaseRenderer
      * @param string : list of the renderer
      * @param string : base_path
      */
-    public function __construct($renderer, $base_path)
+    public function __construct($renderers, $base_path)
     {
-        $rendererList = explode(',', $renderer);
+        $rendererList = explode(',', $renderers);
 
         $this->nameList = array();
         $this->rendererList = array();
@@ -35,7 +37,7 @@ class BaseRenderer
         //let's load the renderer dynamically
         foreach ($rendererList as $renderer) {
             $this->nameList[] = $renderer;
-            if (in_array($renderer, array('Behat2', 'Twig', 'Minimal'))) {
+            if (in_array($renderer, array('Behat2', 'Twig', 'Minimal', 'Json'))) {
                 $className = __NAMESPACE__.'\\'.$renderer.'Renderer';
             } else {
                 $className = $renderer;
@@ -49,7 +51,7 @@ class BaseRenderer
      *
      * @return array
      */
-    public function getNameList()
+    public function getNameList(): array
     {
         return $this->nameList;
     }
@@ -57,11 +59,11 @@ class BaseRenderer
     /**
      * Renders before an exercice.
      *
-     * @param object : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeExercise($obj)
+    public function renderBeforeExercise(BehatHTMLFormatter $obj)
     {
         $print = array();
         foreach ($this->rendererList as $name => $renderer) {
@@ -244,11 +246,11 @@ class BaseRenderer
     /**
      * Renders after a step.
      *
-     * @param object : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterStep($obj)
+    public function renderAfterStep(BehatHTMLFormatter $obj)
     {
         $print = array();
         foreach ($this->rendererList as $name => $renderer) {

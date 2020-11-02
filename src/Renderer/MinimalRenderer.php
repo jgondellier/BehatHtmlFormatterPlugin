@@ -7,27 +7,30 @@
 
 namespace gondellier\BehatHTMLFormatter\Renderer;
 
+use gondellier\BehatHTMLFormatter\Formatter\BehatHTMLFormatter;
+
 class MinimalRenderer
 {
     private $extension = 'csv';
+    private $rendererList;
 
     public function __construct()
     {
     }
 
-    public function getExtension($renderer)
+    public function getExtension($renderer): string
     {
-        return $this->rendererList[$renderer]->getExtension();
+        return $this->extension;
     }
 
     /**
      * Renders before an exercice.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeExercise($obj)
+    public function renderBeforeExercise(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -35,11 +38,11 @@ class MinimalRenderer
     /**
      * Renders after an exercice.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterExercise($obj)
+    public function renderAfterExercise(BehatHTMLFormatter $obj): string
     {
         $strFeatPassed = count($obj->getPassedFeatures());
         $strFeatFailed = count($obj->getFailedFeatures());
@@ -55,10 +58,10 @@ class MinimalRenderer
         $sceTotal = (count($obj->getFailedScenarios()) + count($obj->getPendingScenarios()) + count($obj->getPassedScenarios()));
         $stepsTotal = (count($obj->getFailedSteps()) + count($obj->getPassedSteps()) + count($obj->getSkippedSteps()) + count($obj->getPendingSteps()));
 
-        $print = $featTotal.','.$strFeatPassed.','.$strFeatFailed."\n";
-        $print .= $sceTotal.','.$strScePassed.','.$strScePending.','.$strSceFailed."\n";
-        $print .= $stepsTotal.','.$strStepsPassed.','.$strStepsFailed.','.$strStepsSkipped.','.$strStepsPending."\n";
-        $print .= $obj->getTimer().','.$obj->getMemory()."\n";
+        $print = $featTotal . ',' . $strFeatPassed . ',' . $strFeatFailed . "\n";
+        $print .= $sceTotal . ',' . $strScePassed . ',' . $strScePending . ',' . $strSceFailed . "\n";
+        $print .= $stepsTotal . ',' . $strStepsPassed . ',' . $strStepsFailed . ',' . $strStepsSkipped . ',' . $strStepsPending . "\n";
+        $print .= $obj->getTimer() . ',' . $obj->getMemory() . "\n";
 
         return $print;
     }
@@ -66,11 +69,11 @@ class MinimalRenderer
     /**
      * Renders before a suite.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeSuite($obj)
+    public function renderBeforeSuite(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -78,11 +81,11 @@ class MinimalRenderer
     /**
      * Renders after a suite.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterSuite($obj)
+    public function renderAfterSuite(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -90,11 +93,11 @@ class MinimalRenderer
     /**
      * Renders before a feature.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeFeature($obj)
+    public function renderBeforeFeature(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -102,11 +105,11 @@ class MinimalRenderer
     /**
      * Renders after a feature.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterFeature($obj)
+    public function renderAfterFeature(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -114,11 +117,11 @@ class MinimalRenderer
     /**
      * Renders before a scenario.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeScenario($obj)
+    public function renderBeforeScenario(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -126,11 +129,11 @@ class MinimalRenderer
     /**
      * Renders after a scenario.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterScenario($obj)
+    public function renderAfterScenario(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -138,11 +141,11 @@ class MinimalRenderer
     /**
      * Renders before an outline.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeOutline($obj)
+    public function renderBeforeOutline(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -150,11 +153,11 @@ class MinimalRenderer
     /**
      * Renders after an outline.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj  : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterOutline($obj)
+    public function renderAfterOutline(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -162,11 +165,11 @@ class MinimalRenderer
     /**
      * Renders before a step.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderBeforeStep($obj)
+    public function renderBeforeStep(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -174,11 +177,11 @@ class MinimalRenderer
     /**
      * Renders after a step.
      *
-     * @param object   : BehatHTMLFormatter object
+     * @param BehatHTMLFormatter $obj  : BehatHTMLFormatter object
      *
      * @return string : HTML generated
      */
-    public function renderAfterStep($obj)
+    public function renderAfterStep(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -188,7 +191,7 @@ class MinimalRenderer
      *
      * @return string : HTML generated
      */
-    public function getCSS()
+    public function getCSS(): string
     {
         return '';
     }
@@ -198,7 +201,7 @@ class MinimalRenderer
      *
      * @return string : HTML generated
      */
-    public function getJS()
+    public function getJS(): string
     {
         return '';
     }

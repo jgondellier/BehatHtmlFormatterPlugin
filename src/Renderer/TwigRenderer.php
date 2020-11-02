@@ -3,8 +3,8 @@
 namespace gondellier\BehatHTMLFormatter\Renderer;
 
 use gondellier\BehatHTMLFormatter\Formatter\BehatHTMLFormatter;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Twig renderer for Behat report.
@@ -20,7 +20,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeExercise(BehatHTMLFormatter $obj)
+    public function renderBeforeExercise(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -32,12 +32,12 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterExercise(BehatHTMLFormatter $obj)
+    public function renderAfterExercise(BehatHTMLFormatter $obj): string
     {
-        $templatePath = dirname(__FILE__).'/../../templates';
-        $loader = new Twig_Loader_Filesystem($templatePath);
-        $twig = new Twig_Environment($loader, array());
-        $print = $twig->render('index.html.twig',
+        $templatePath = __DIR__ .'/../../templates';
+        $loader = new FilesystemLoader($templatePath);
+        $twig = new Environment($loader, array());
+        return $twig->render('index.html.twig',
             array(
                 'suites' => $obj->getSuites(),
                 'failedScenarios' => $obj->getFailedScenarios(),
@@ -53,8 +53,6 @@ class TwigRenderer
                 'printLoopBreak' => $obj->getPrintLoopBreak(),
             )
         );
-
-        return $print;
     }
 
     /**
@@ -64,7 +62,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeSuite(BehatHTMLFormatter $obj)
+    public function renderBeforeSuite(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -76,7 +74,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterSuite(BehatHTMLFormatter $obj)
+    public function renderAfterSuite(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -88,7 +86,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeFeature(BehatHTMLFormatter $obj)
+    public function renderBeforeFeature(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -100,7 +98,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterFeature(BehatHTMLFormatter $obj)
+    public function renderAfterFeature(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -112,7 +110,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeScenario(BehatHTMLFormatter $obj)
+    public function renderBeforeScenario(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -124,7 +122,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterScenario(BehatHTMLFormatter $obj)
+    public function renderAfterScenario(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -136,7 +134,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeOutline(BehatHTMLFormatter $obj)
+    public function renderBeforeOutline(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -148,7 +146,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterOutline(BehatHTMLFormatter $obj)
+    public function renderAfterOutline(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -160,7 +158,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderBeforeStep(BehatHTMLFormatter $obj)
+    public function renderBeforeStep(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -172,7 +170,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function renderAfterStep(BehatHTMLFormatter $obj)
+    public function renderAfterStep(BehatHTMLFormatter $obj): string
     {
         return '';
     }
@@ -182,7 +180,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function getCSS()
+    public function getCSS(): string
     {
         return '';
     }
@@ -192,7 +190,7 @@ class TwigRenderer
      *
      * @return string : HTML generated
      */
-    public function getJS()
+    public function getJS(): string
     {
         return '';
     }

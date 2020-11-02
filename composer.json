@@ -10,9 +10,11 @@
         "php": ">=7.1.0",
         "twig/twig":"~2.0",
         "behat/behat": "~3.0",
-        "behat/gherkin": "~4.2"
+        "behat/gherkin": "~4.2",
+        "ext-json": "*"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "symfony/process": ">2.3,<4.0",
         "phpunit/phpunit": "~4.1"
     },

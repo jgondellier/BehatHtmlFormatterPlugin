@@ -13,17 +13,17 @@ use Behat\Testwork\Output\Printer\OutputPrinter as PrinterInterface;
 class FileOutputPrinter implements PrinterInterface
 {
     /**
-     * @param  $outputPath where to save the generated report file
+     * @param string $outputPath where to save the generated report file
      */
     private $outputPath;
 
     /**
-     * @param  $base_path Behat base path
+     * @param string $base_path Behat base path
      */
     private $base_path;
 
     /**
-     * @param  $rendererFiles List of the filenames for the renderers
+     * @param array $rendererFiles List of the filenames for the renderers
      */
     private $rendererFiles;
 
@@ -94,7 +94,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @param array $styles
      */
-    public function setOutputStyles(array $styles)
+    public function setOutputStyles(array $styles):void
     {
     }
 
@@ -103,7 +103,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @return array
      */
-    public function getOutputStyles()
+    public function getOutputStyles():array
     {
     }
 
@@ -112,7 +112,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @param bool $decorated
      */
-    public function setOutputDecorated($decorated)
+    public function setOutputDecorated($decorated):void
     {
     }
 
@@ -121,7 +121,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @return null|bool
      */
-    public function isOutputDecorated()
+    public function isOutputDecorated():?bool
     {
         return true;
     }
@@ -140,7 +140,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @return int
      */
-    public function getOutputVerbosity()
+    public function getOutputVerbosity():int
     {
     }
 
@@ -149,11 +149,15 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @param string|array $messages message or array of messages
      */
-    public function write($messages = array())
+    public function write($messages = array()):void
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.html';
+            $ext='html';
+            if($key==="Json"){
+                $ext = 'json';
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
             file_put_contents($file, $message);
             $this->copyAssets($key);
         }
@@ -168,7 +172,11 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.html';
+            $ext='html';
+            if($key==="Json"){
+                $ext = 'json';
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
             file_put_contents($file, $message, FILE_APPEND);
         }
     }
@@ -182,7 +190,11 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.html';
+            $ext='html';
+            if($key==="Json"){
+                $ext = 'json';
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
             $fileContents = file_get_contents($file);
             file_put_contents($file, $message.$fileContents);
         }
@@ -193,7 +205,7 @@ class FileOutputPrinter implements PrinterInterface
      *
      * @param string : the renderer
      */
-    public function copyAssets($renderer)
+    public function copyAssets($renderer): void
     {
         // If the assets folder doesn' exist in the output path for this renderer, copy it
         $source = realpath(dirname(__FILE__));
@@ -205,7 +217,9 @@ class FileOutputPrinter implements PrinterInterface
 
         //first create the assets dir
         $destination = $this->outputPath.DIRECTORY_SEPARATOR.'assets';
-        @mkdir($destination);
+        if (!mkdir($destination) && !is_dir($destination)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $destination));
+        }
 
         $this->recurse_copy($assets_source, $destination.DIRECTORY_SEPARATOR.$renderer);
     }
@@ -219,9 +233,11 @@ class FileOutputPrinter implements PrinterInterface
     private function recurse_copy($src, $dst)
     {
         $dir = opendir($src);
-        @mkdir($dst);
+        if (!mkdir($dst) && !is_dir($dst)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dst));
+        }
         while (false !== ($file = readdir($dir))) {
-            if (('.' != $file) && ('..' != $file)) {
+            if (('.' !== $file) && ('..' !== $file)) {
                 if (is_dir($src.'/'.$file)) {
                     $this->recurse_copy($src.'/'.$file, $dst.'/'.$file);
                 } else {
