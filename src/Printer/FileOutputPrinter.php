@@ -153,11 +153,17 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
+            $path_parts = pathinfo($this->rendererFiles[$key]);
             $ext='html';
             if($key==="Json"){
                 $ext = 'json';
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
+            if($path_parts['extension']){
+                $fileName = $this->rendererFiles[$key];
+            }else{
+                $fileName = $this->rendererFiles[$key].'.'.$ext;
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             file_put_contents($file, $message);
             $this->copyAssets($key);
         }
@@ -172,11 +178,17 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
+            $path_parts = pathinfo($this->rendererFiles[$key]);
             $ext='html';
             if($key==="Json"){
                 $ext = 'json';
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
+            if($path_parts['extension']){
+                $fileName = $this->rendererFiles[$key];
+            }else{
+                $fileName = $this->rendererFiles[$key].'.'.$ext;
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             file_put_contents($file, $message, FILE_APPEND);
         }
     }
@@ -190,11 +202,17 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
+            $path_parts = pathinfo($this->rendererFiles[$key]);
             $ext='html';
             if($key==="Json"){
                 $ext = 'json';
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$this->rendererFiles[$key].'.'.$ext;
+            if($path_parts['extension']){
+                $fileName = $this->rendererFiles[$key];
+            }else{
+                $fileName = $this->rendererFiles[$key].'.'.$ext;
+            }
+            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             $fileContents = file_get_contents($file);
             file_put_contents($file, $message.$fileContents);
         }
@@ -208,7 +226,7 @@ class FileOutputPrinter implements PrinterInterface
     public function copyAssets($renderer): void
     {
         // If the assets folder doesn' exist in the output path for this renderer, copy it
-        $source = realpath(dirname(__FILE__));
+        $source = realpath(__DIR__);
         $assets_source = realpath($source.'/../../assets/'.$renderer);
         if (false === $assets_source) {
             //There is no assets to copy for this renderer
@@ -230,7 +248,7 @@ class FileOutputPrinter implements PrinterInterface
      * @param $src
      * @param $dst
      */
-    private function recurse_copy($src, $dst)
+    private function recurse_copy($src, $dst): void
     {
         $dir = opendir($src);
         if (!mkdir($dst) && !is_dir($dst)) {
