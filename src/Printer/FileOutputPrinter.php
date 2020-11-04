@@ -158,7 +158,7 @@ class FileOutputPrinter implements PrinterInterface
             if($key==="Json"){
                 $ext = 'json';
             }
-            if($path_parts['extension']){
+            if(array_key_exists('extension',$path_parts)){
                 $fileName = $this->rendererFiles[$key];
             }else{
                 $fileName = $this->rendererFiles[$key].'.'.$ext;
@@ -183,7 +183,7 @@ class FileOutputPrinter implements PrinterInterface
             if($key==="Json"){
                 $ext = 'json';
             }
-            if($path_parts['extension']){
+            if(array_key_exists('extension',$path_parts)){
                 $fileName = $this->rendererFiles[$key];
             }else{
                 $fileName = $this->rendererFiles[$key].'.'.$ext;
@@ -207,7 +207,7 @@ class FileOutputPrinter implements PrinterInterface
             if($key==="Json"){
                 $ext = 'json';
             }
-            if($path_parts['extension']){
+            if(array_key_exists('extension',$path_parts)){
                 $fileName = $this->rendererFiles[$key];
             }else{
                 $fileName = $this->rendererFiles[$key].'.'.$ext;
