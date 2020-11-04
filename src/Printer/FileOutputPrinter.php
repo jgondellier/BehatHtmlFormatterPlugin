@@ -235,7 +235,8 @@ class FileOutputPrinter implements PrinterInterface
 
         //first create the assets dir
         $destination = $this->outputPath.DIRECTORY_SEPARATOR.'assets';
-        if (!mkdir($destination) && !is_dir($destination)) {
+
+        if (!is_dir($destination) && !mkdir($destination) && !is_dir($destination)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $destination));
         }
 
@@ -251,7 +252,8 @@ class FileOutputPrinter implements PrinterInterface
     private function recurse_copy($src, $dst): void
     {
         $dir = opendir($src);
-        if (!mkdir($dst) && !is_dir($dst)) {
+
+        if (!is_dir($dst) && !mkdir($dst) && !is_dir($dst)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $dst));
         }
         while (false !== ($file = readdir($dir))) {
