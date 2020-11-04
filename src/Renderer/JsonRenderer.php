@@ -57,9 +57,9 @@ class JsonRenderer
         foreach($obj->getSuites() as $suites){
             /** @var $suites Suite */
             if($suites->getFeatures()){
-                $print['Suites'][$suites->getName()] = [
+                $printSuites= [
                     'Name' =>$suites->getName()
-                    ];
+                ];
                 foreach ($suites->getFeatures() as $feature){
                     /** @var $feature Feature */
                     $printFeature = [
@@ -104,8 +104,9 @@ class JsonRenderer
                         }
                         $printFeature['scenarios']=$printScenario;
                     }
-                    $print['Suites'][$suites->getName()]=$printFeature;
+                    $printSuites['features'][]=$printFeature;
                 }
+                $print['suites'][]=$printSuites;
             }
         }
 
