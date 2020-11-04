@@ -104,7 +104,7 @@ class JsonRenderer
                         }
                         $printFeature['scenarios']=$printScenario;
                     }
-                    $print['Suites'][$suites->getName()][]=$printFeature;
+                    $print['Suites'][$suites->getName()]=$printFeature;
                 }
             }
         }
