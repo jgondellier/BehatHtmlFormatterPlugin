@@ -73,10 +73,8 @@ class JsonRenderer
                     }
                     foreach($feature->getScenarios() as $scenario){
                         /** @var $scenario Scenario */
-                        $printScenario=array();
-                        $scenarioId = $scenario->getId();
-                        $printScenario[$scenarioId] = [
-                            'id' => $scenarioId,
+                        $printScenario = [
+                            'id' => $scenario->getId(),
                             'name' => $scenario->getName(),
                             'ispassed' => $scenario->isPassed(),
                             'ispending' => $scenario->isPending(),
@@ -85,7 +83,7 @@ class JsonRenderer
 
                         foreach($scenario->getSteps() as $step){
                             /** @var $step Step */
-                            $printScenario[$scenarioId]['step'][] = [
+                            $printScenario['step'][] = [
                                 'isPassed' => $step->isPassed(),
                                 'isPending' => $step->isPending(),
                                 'isSkipped' => $step->isSkipped(),
@@ -102,7 +100,7 @@ class JsonRenderer
                                 'definition' => $step->getDefinition(),
                             ];
                         }
-                        $printFeature['scenarios']=$printScenario;
+                        $printFeature['scenarios'][]=$printScenario;
                     }
                     $printSuites['features'][]=$printFeature;
                 }
