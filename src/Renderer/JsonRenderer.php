@@ -102,7 +102,7 @@ class JsonRenderer
                                 'definition' => $step->getDefinition(),
                             ];
                         }
-                        $printFeature['scenarios'][]=$printScenario;
+                        $printFeature['scenarios']=$printScenario;
                     }
                     $print['Suites'][$suites->getName()][]=$printFeature;
                 }
