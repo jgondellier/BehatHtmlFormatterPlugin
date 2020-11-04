@@ -58,7 +58,7 @@ class JsonRenderer
             /** @var $suites Suite */
             if($suites->getFeatures()){
                 $printSuites= [
-                    'Name' =>$suites->getName()
+                    'name' =>$suites->getName()
                 ];
                 foreach ($suites->getFeatures() as $feature){
                     /** @var $feature Feature */
