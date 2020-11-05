@@ -68,39 +68,44 @@ class JsonRenderer
                         'description' => $feature->getDescription(),
                         'passedClass' => $feature->getPassedClass(),
                     ];
-                    foreach($feature->getTags() as $tag){
-                        $printFeature['tags'][] = $tag;
-                    }
-                    foreach($feature->getScenarios() as $scenario){
-                        /** @var $scenario Scenario */
-                        $printScenario = [
-                            'id' => $scenario->getId(),
-                            'name' => $scenario->getName(),
-                            'ispassed' => $scenario->isPassed(),
-                            'ispending' => $scenario->isPending(),
-                            'tags' => $scenario->getTags(),
-                        ];
-
-                        foreach($scenario->getSteps() as $step){
-                            /** @var $step Step */
-                            $printScenario['step'][] = [
-                                'isPassed' => $step->isPassed(),
-                                'isPending' => $step->isPending(),
-                                'isSkipped' => $step->isSkipped(),
-                                'isFailed' => $step->isFailed(),
-                                'keyword' => $step->getKeyword(),
-                                'text' => $step->getText(),
-                                'arguments' => $step->getArguments(),
-                                'exceptions' => $step->getException(),
-                                'output' => $step->getOutput(),
-                                'line' => $step->getLine(),
-                                'result' => $step->getResult(),
-                                'resultCode' => $step->getResultCode(),
-                                'argumentType' => $step->getArgumentType(),
-                                'definition' => $step->getDefinition(),
-                            ];
+                    if($feature->getTags()){
+                        foreach($feature->getTags() as $tag){
+                            $printFeature['tags'][] = $tag;
                         }
-                        $printFeature['scenarios'][]=$printScenario;
+                    }
+                    if($feature->getScenarios()){
+                        foreach($feature->getScenarios() as $scenario){
+                            /** @var $scenario Scenario */
+                            $printScenario = [
+                                'id' => $scenario->getId(),
+                                'name' => $scenario->getName(),
+                                'ispassed' => $scenario->isPassed(),
+                                'ispending' => $scenario->isPending(),
+                                'tags' => $scenario->getTags(),
+                            ];
+                            if($scenario->getSteps()){
+                                foreach($scenario->getSteps() as $step){
+                                    /** @var $step Step */
+                                    $printScenario['step'][] = [
+                                        'isPassed' => $step->isPassed(),
+                                        'isPending' => $step->isPending(),
+                                        'isSkipped' => $step->isSkipped(),
+                                        'isFailed' => $step->isFailed(),
+                                        'keyword' => $step->getKeyword(),
+                                        'text' => $step->getText(),
+                                        'arguments' => $step->getArguments(),
+                                        'exceptions' => $step->getException(),
+                                        'output' => $step->getOutput(),
+                                        'line' => $step->getLine(),
+                                        'result' => $step->getResult(),
+                                        'resultCode' => $step->getResultCode(),
+                                        'argumentType' => $step->getArgumentType(),
+                                        'definition' => $step->getDefinition(),
+                                    ];
+                                }
+                            }
+                            $printFeature['scenarios'][]=$printScenario;
+                        }
                     }
                     $printSuites['features'][]=$printFeature;
                 }
