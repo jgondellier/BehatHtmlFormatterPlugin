@@ -38,20 +38,20 @@ class JsonRenderer
     {
         $print =array();
         $print['summary'] = [
-            'Date' => date('d/m/Y H:i:s'),
-            'Features'=>[
-                'Failed'=>count($obj->getFailedFeatures()),
-                'Passed'=>count($obj->getPassedFeatures())
+            'date' => date('d/m/Y H:i:s'),
+            'features'=>[
+                'failed'=>count($obj->getFailedFeatures()),
+                'passed'=>count($obj->getPassedFeatures())
             ],
-            'Scenarios'=>[
-                'Failed'=>count($obj->getFailedScenarios()),
-                'Pending'=>count($obj->getPendingScenarios()),
-                'Passed'=>count($obj->getPassedScenarios())
+            'scenarios'=>[
+                'failed'=>count($obj->getFailedScenarios()),
+                'pending'=>count($obj->getPendingScenarios()),
+                'passed'=>count($obj->getPassedScenarios())
             ],
-            'Steps'=>[
-                'Failed'=>count($obj->getFailedSteps()),
-                'Skipped'=>count($obj->getSkippedSteps()),
-                'Passed'=>count($obj->getPassedSteps())
+            'steps'=>[
+                'failed'=>count($obj->getFailedSteps()),
+                'skipped'=>count($obj->getSkippedSteps()),
+                'passed'=>count($obj->getPassedSteps())
             ]
         ];
         foreach($obj->getSuites() as $suites){
@@ -63,7 +63,7 @@ class JsonRenderer
                 foreach ($suites->getFeatures() as $feature){
                     /** @var $feature Feature */
                     $printFeature = [
-                        'id' => $feature->getId(),
+                        'behatId' => $feature->getId(),
                         'name' => $feature->getName(),
                         'description' => $feature->getDescription(),
                         'passedClass' => $feature->getPassedClass(),
@@ -77,10 +77,10 @@ class JsonRenderer
                         foreach($feature->getScenarios() as $scenario){
                             /** @var $scenario Scenario */
                             $printScenario = [
-                                'id' => $scenario->getId(),
+                                'behatId' => $scenario->getId(),
                                 'name' => $scenario->getName(),
-                                'ispassed' => $scenario->isPassed(),
-                                'ispending' => $scenario->isPending(),
+                                'isPassed' => $scenario->isPassed(),
+                                'isPending' => $scenario->isPending(),
                                 'tags' => $scenario->getTags(),
                             ];
                             if($scenario->getSteps()){
