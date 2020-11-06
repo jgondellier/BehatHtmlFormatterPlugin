@@ -39,7 +39,7 @@ class FileOutputPrinter implements PrinterInterface
         foreach ($rendererList as $renderer) {
             if ('generated' === $filename) {
                 $date = date('YmdHis');
-                $this->rendererFiles[$renderer] = $renderer.'_'.$date;
+                $this->rendererFiles[$renderer] = $renderer.'_'.$date.'.html';
             } else {
                 $this->rendererFiles[$renderer] = $filename;
             }
@@ -82,9 +82,9 @@ class FileOutputPrinter implements PrinterInterface
     /**
      * Returns output path.
      *
-     * @return string output path
+     * @return null|string output path
      */
-    public function getOutputPath():string
+    public function getOutputPath()
     {
         return $this->outputPath;
     }
@@ -153,19 +153,17 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $path_parts = pathinfo($this->rendererFiles[$key]);
-            $ext='html';
-            if($key==="Json"){
-                $ext = 'json';
-            }
-            if(array_key_exists('extension',$path_parts)){
-                $fileName = $this->rendererFiles[$key];
+            $fileName = $this->rendererFiles[$key];
+            if($this->outputPath){
+                $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             }else{
-                $fileName = $this->rendererFiles[$key].'.'.$ext;
+                $file = $fileName;
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
+
             file_put_contents($file, $message);
-            $this->copyAssets($key);
+            if($key==="Twig"){
+                $this->copyAssets($key);
+            }
         }
     }
 
@@ -178,17 +176,12 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $path_parts = pathinfo($this->rendererFiles[$key]);
-            $ext='html';
-            if($key==="Json"){
-                $ext = 'json';
-            }
-            if(array_key_exists('extension',$path_parts)){
-                $fileName = $this->rendererFiles[$key];
+            $fileName = $this->rendererFiles[$key];
+            if($this->outputPath){
+                $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             }else{
-                $fileName = $this->rendererFiles[$key].'.'.$ext;
+                $file = $fileName;
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             file_put_contents($file, $message, FILE_APPEND);
         }
     }
@@ -202,17 +195,12 @@ class FileOutputPrinter implements PrinterInterface
     {
         //Write it for each message = each renderer
         foreach ($messages as $key => $message) {
-            $path_parts = pathinfo($this->rendererFiles[$key]);
-            $ext='html';
-            if($key==="Json"){
-                $ext = 'json';
-            }
-            if(array_key_exists('extension',$path_parts)){
-                $fileName = $this->rendererFiles[$key];
+            $fileName = $this->rendererFiles[$key];
+            if($this->outputPath){
+                $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             }else{
-                $fileName = $this->rendererFiles[$key].'.'.$ext;
+                $file = $fileName;
             }
-            $file = $this->outputPath.DIRECTORY_SEPARATOR.$fileName;
             $fileContents = file_get_contents($file);
             file_put_contents($file, $message.$fileContents);
         }
@@ -274,4 +262,5 @@ class FileOutputPrinter implements PrinterInterface
     public function flush()
     {
     }
+
 }

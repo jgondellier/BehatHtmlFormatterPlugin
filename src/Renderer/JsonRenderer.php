@@ -105,15 +105,15 @@ class JsonRenderer
                                         'definition' => $step->getDefinition(),
                                     ];
                                     if ($step->getException()){
-                                        $featureFolder = preg_replace('/\W/', '_', $scope->getFeature()->getTitle());
+                                        $featureFolder = preg_replace('/\W/', '_', $feature->getName());
                                         //Screenshot
-                                        $screenshotFileName = preg_replace('/\W/', '_', $this->scenario->getTitle()).'.png';
+                                        $screenshotFileName = preg_replace('/\W/', '_', $scenario->getName()).'.png';
                                         $screenshotPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_SCREENSHOT_FOLDER']. DIRECTORY_SEPARATOR .$screenshotFileName;
                                         if(file_exists($screenshotPath)){
                                             $printStep['screenshot'] =  $screenshotPath;
                                         }
                                         //URL
-                                        $urlFileName = preg_replace('/\W/', '_', $this->scenario->getTitle()).'.url';
+                                        $urlFileName = preg_replace('/\W/', '_', $scenario->getName()).'.url';
                                         $urlPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_URL_FOLDER']. DIRECTORY_SEPARATOR .$urlFileName;
                                         if(file_exists($urlPath)){
                                             $printStep['screenshot'] =  file_get_contents($urlPath);
