@@ -120,7 +120,7 @@ class JsonRenderer
                                         }
 
                                     }
-                                    $printScenario['step'][] = $printStep;
+                                    $printScenario['steps'][] = $printStep;
                                 }
                             }
                             $printFeature['scenarios'][]=$printScenario;
