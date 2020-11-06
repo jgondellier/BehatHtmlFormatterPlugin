@@ -39,6 +39,8 @@ class JsonRenderer
         $print =array();
         $print['summary'] = [
             'date' => date('d/m/Y H:i:s'),
+            'timer' => $obj->getTimer(),
+            'outputPath' => $obj->getOutputPath(),
             'features'=>[
                 'failed'=>count($obj->getFailedFeatures()),
                 'passed'=>count($obj->getPassedFeatures())
@@ -86,7 +88,7 @@ class JsonRenderer
                             if($scenario->getSteps()){
                                 foreach($scenario->getSteps() as $step){
                                     /** @var $step Step */
-                                    $printScenario['step'][] = [
+                                    $printStep = [
                                         'isPassed' => $step->isPassed(),
                                         'isPending' => $step->isPending(),
                                         'isSkipped' => $step->isSkipped(),
@@ -102,6 +104,23 @@ class JsonRenderer
                                         'argumentType' => $step->getArgumentType(),
                                         'definition' => $step->getDefinition(),
                                     ];
+                                    if ($step->getException()){
+                                        $featureFolder = preg_replace('/\W/', '_', $scope->getFeature()->getTitle());
+                                        //Screenshot
+                                        $screenshotFileName = preg_replace('/\W/', '_', $this->scenario->getTitle()).'.png';
+                                        $screenshotPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_SCREENSHOT_FOLDER']. DIRECTORY_SEPARATOR .$screenshotFileName;
+                                        if(file_exists($screenshotPath)){
+                                            $printStep['screenshot'] =  $screenshotPath;
+                                        }
+                                        //URL
+                                        $urlFileName = preg_replace('/\W/', '_', $this->scenario->getTitle()).'.url';
+                                        $urlPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_URL_FOLDER']. DIRECTORY_SEPARATOR .$urlFileName;
+                                        if(file_exists($urlPath)){
+                                            $printStep['screenshot'] =  file_get_contents($urlPath);
+                                        }
+
+                                    }
+                                    $printScenario['step'][] = $printStep;
                                 }
                             }
                             $printFeature['scenarios'][]=$printScenario;
