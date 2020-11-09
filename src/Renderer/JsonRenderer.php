@@ -39,7 +39,7 @@ class JsonRenderer
         $print =array();
         $print['summary'] = [
             'date' => date('d/m/Y H:i:s'),
-            'timer' => $obj->getTimer(),
+            'timer' => (string) $obj->getTimer(),
             'outputPath' => $obj->getOutputPath(),
             'features'=>[
                 'failed'=>count($obj->getFailedFeatures()),
@@ -70,6 +70,12 @@ class JsonRenderer
                         'description' => $feature->getDescription(),
                         'passedClass' => $feature->getPassedClass(),
                     ];
+                    if($feature->getPassedClass()){
+                        $printFeature['isPassed'] = True;
+                    }else{
+                        $printFeature['isFailed'] = False;
+                    }
+
                     if($feature->getTags()){
                         foreach($feature->getTags() as $tag){
                             $printFeature['tags'][] = $tag;
@@ -110,13 +116,13 @@ class JsonRenderer
                                         $screenshotFileName = preg_replace('/\W/', '_', $scenario->getName()).'.png';
                                         $screenshotPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_SCREENSHOT_FOLDER']. DIRECTORY_SEPARATOR .$screenshotFileName;
                                         if(file_exists($screenshotPath)){
-                                            $printStep['screenshot'] =  $screenshotPath;
+                                            $printStep['screenshotPath'] =  $screenshotPath;
                                         }
                                         //URL
                                         $urlFileName = preg_replace('/\W/', '_', $scenario->getName()).'.url';
                                         $urlPath = $featureFolder. DIRECTORY_SEPARATOR .$_SERVER['RESULT_URL_FOLDER']. DIRECTORY_SEPARATOR .$urlFileName;
                                         if(file_exists($urlPath)){
-                                            $printStep['screenshot'] =  file_get_contents($urlPath);
+                                            $printStep['urlPath'] =  file_get_contents($urlPath);
                                         }
 
                                     }
