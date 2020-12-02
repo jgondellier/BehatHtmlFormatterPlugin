@@ -669,6 +669,7 @@ class BehatHTMLFormatter implements Formatter
             $exception = $result->getException();
             if ($exception) {
                 if ($exception instanceof PendingException) {
+                    $step->setException($exception->getMessage());
                     $this->pendingSteps[] = $step;
                 } else {
                     $step->setException($exception->getMessage());
