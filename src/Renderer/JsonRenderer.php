@@ -57,6 +57,8 @@ class JsonRenderer
             ]
         ];
         foreach($obj->getSuites() as $suites){
+            $nbScenarioSuccess = 0;
+            $nbScenarioFailed = 0;
             /** @var $suites Suite */
             if($suites->getFeatures()){
                 $printSuites= [
@@ -91,6 +93,11 @@ class JsonRenderer
                                 'isPending' => $scenario->isPending(),
                                 'tags' => $scenario->getTags(),
                             ];
+                            if($scenario->isPassed()){
+                                $nbScenarioSuccess++;
+                            }else{
+                                $nbScenarioFailed++;
+                            }
                             if($scenario->getSteps()){
                                 foreach($scenario->getSteps() as $step){
                                     /** @var $step Step */
@@ -134,6 +141,8 @@ class JsonRenderer
                     }
                     $printSuites['features'][]=$printFeature;
                 }
+                $printSuites['scenariosSuccess'] =  $nbScenarioSuccess;
+                $printSuites['scenariosFailed'] =  $nbScenarioFailed;
                 $print['suites'][]=$printSuites;
             }
         }
