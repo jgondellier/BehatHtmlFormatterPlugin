@@ -11,7 +11,9 @@ use Behat\Behat\EventDispatcher\Event\BeforeOutlineTested;
 use Behat\Behat\EventDispatcher\Event\BeforeScenarioTested;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Tester\Result\ExecutedStepResult;
+use Behat\Behat\Tester\Result\SkippedStepResult;
 use Behat\Behat\Tester\Result\StepResult;
+use Behat\Behat\Tester\Result\UndefinedStepResult;
 use Behat\Testwork\Counter\Memory;
 use Behat\Testwork\Counter\Timer;
 use Behat\Testwork\EventDispatcher\Event\AfterExerciseCompleted;
@@ -656,10 +658,10 @@ class BehatHTMLFormatter implements Formatter
         }
 
         //What is the result of this step ?
-        if ($result instanceof \Behat\Behat\Tester\Result\UndefinedStepResult) {
+        if ($result instanceof UndefinedStepResult) {
             //pending step -> no definition to load
             $this->pendingSteps[] = $step;
-        } else if ($result instanceof \Behat\Behat\Tester\Result\SkippedStepResult) {
+        } else if ($result instanceof SkippedStepResult) {
             //skipped step
             /* @var ExecutedStepResult $result */
             $step->setDefinition($result->getStepDefinition());
