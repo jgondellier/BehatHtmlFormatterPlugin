@@ -99,6 +99,7 @@ default:
 ### Extension configuration
 
 * `renderer` - The engine that Behat will use for rendering, thus the types of report format Behat should output (multiple report formats are allowed, separate them by commas). Allowed values are:
+ * *JSON* for generate a simple json file. 
  * *Behat2* for generating HTML reports like they were generated in Behat 2.
  * *Twig* A new and more modern format based on Twig.
  * *Minimal* An ultra minimal HTML output.

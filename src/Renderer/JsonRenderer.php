@@ -7,6 +7,7 @@ use gondellier\BehatHTMLFormatter\Classes\Scenario;
 use gondellier\BehatHTMLFormatter\Classes\Step;
 use gondellier\BehatHTMLFormatter\Classes\Suite;
 use gondellier\BehatHTMLFormatter\Formatter\BehatHTMLFormatter;
+use Behat\Gherkin\Node\TableNode;
 
 /**
  * JSON renderer for Behat report.
@@ -104,6 +105,14 @@ class JsonRenderer
                             if($scenario->getSteps()){
                                 foreach($scenario->getSteps() as $step){
                                     /** @var $step Step */
+                                    $argumentType = $step->getArgumentType();
+                                    $arguments = null;
+                                    if ('PyString' === $argumentType) {
+                                        $arguments[] = htmlentities($step->getArguments());
+                                    }
+                                    if ('Table' === $argumentType) {
+                                        $arguments = $step->getArguments()->getHash();
+                                    }
                                     $printStep = [
                                         'isPassed' => $step->isPassed(),
                                         'isPending' => $step->isPending(),
@@ -111,13 +120,13 @@ class JsonRenderer
                                         'isFailed' => $step->isFailed(),
                                         'keyword' => $step->getKeyword(),
                                         'text' => $step->getText(),
-                                        'arguments' => $step->getArguments(),
+                                        'arguments' => $arguments,
                                         'exceptions' => $step->getException(),
                                         'output' => $step->getOutput(),
                                         'line' => $step->getLine(),
                                         'result' => $step->getResult(),
                                         'resultCode' => $step->getResultCode(),
-                                        'argumentType' => $step->getArgumentType(),
+                                        'argumentType' => $argumentType,
                                         'definition' => $step->getDefinition(),
                                     ];
                                     if ($step->getException()){
